@@ -230,20 +230,17 @@ public class MemberRepositoryTest {
 
     @Test
     public  void JpaEventBaseEntity() throws InterruptedException {
-        Member member = new Member("memberA");
-        memberRepository.save(member); // @PrePersist
+
+        Member member = memberRepository.findById(1L).get();
 
         Thread.sleep(100);
         member.setUsername("member2");
 
-        entityManager.flush();
-        entityManager.clear();
+        //Member findMember = memberRepository.findById(member.getId()).get();
 
-        Member findMember = memberRepository.findById(member.getId()).get();
-
-        System.out.println("findMember.getCreatedDate(): " + findMember.getCreatedDate());
+/*        System.out.println("findMember.getCreatedDate(): " + findMember.getCreatedDate());
         System.out.println("findMember.getLastModifiedDate(): " + findMember.getLastModifiedDate());
         System.out.println("findMember.getCreatedBy(): " + findMember.getCreatedBy());
-        System.out.println("findMember.getLastModifiedBy(): " + findMember.getLastModifiedBy());
+        System.out.println("findMember.getLastModifiedBy(): " + findMember.getLastModifiedBy());*/
     }
 }
