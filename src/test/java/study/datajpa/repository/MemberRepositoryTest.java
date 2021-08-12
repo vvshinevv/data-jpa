@@ -10,6 +10,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.dto.MemberDto;
 import study.datajpa.entity.Member;
+import study.datajpa.entity.SubMember;
 import study.datajpa.entity.Team;
 
 import javax.persistence.EntityManager;
@@ -27,6 +28,9 @@ public class MemberRepositoryTest {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private SubMemberRepository subMemberRepository;
 
     @Autowired
     private TeamRepository teamRepository;
@@ -242,5 +246,44 @@ public class MemberRepositoryTest {
         System.out.println("findMember.getLastModifiedDate(): " + findMember.getLastModifiedDate());
         System.out.println("findMember.getCreatedBy(): " + findMember.getCreatedBy());
         System.out.println("findMember.getLastModifiedBy(): " + findMember.getLastModifiedBy());*/
+    }
+
+    @Test
+    public void saveSubMember() {
+        Team teamA = new Team("teamA");
+        Team teamB = new Team("teamB");
+        teamRepository.save(teamA);
+        teamRepository.save(teamB);
+
+        Member member1 = new Member("member1", 10, teamA);
+        Member member2 = new Member("member2", 10, teamB);
+
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        SubMember subMember = new SubMember(member1);
+
+
+
+
+
+
+        System.out.println(a);
+        entityManager.flush();
+        entityManager.clear();
+
+        List<Member> members = memberRepository.findAll();
+        for (Member member : members) {
+            System.out.println("member = " + member.getUsername());
+            System.out.println("team = " + member.getTeam().getName());
+        }
+    }
+
+    static class A {
+
+    }
+
+    static class B extends A {
+
     }
 }
